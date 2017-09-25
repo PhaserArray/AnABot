@@ -1,0 +1,16 @@
+{
+	"auth":
+	{
+		"client_id": "ClientIDHere",
+		"client_secret": "ClientSecretHere",
+		"token": "BotTokenHere"
+	},
+	"auto_role":
+	{
+		"ServerIDHere":
+		{
+			"role": "RoleNameOrIDHere",
+			"message": "WelcomeMessage{0}IsTheUser"
+		}
+	}
+}
