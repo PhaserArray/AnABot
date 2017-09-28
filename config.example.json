@@ -1,16 +1,23 @@
 {
-	"auth":
+	"bot":
 	{
-		"client_id": "ClientIDHere",
-		"client_secret": "ClientSecretHere",
-		"token": "BotTokenHere"
-	},
-	"auto_role":
-	{
-		"ServerIDHere":
+		"prefix": ">",
+		"auth":
 		{
-			"role": "RoleNameOrIDHere",
-			"message": "WelcomeMessage{0}IsTheUser"
+			"client_id": "ClientIDHere",
+			"client_secret": "ClientSecretHere",
+			"token": "BotTokenHere"
+		}
+	},
+	"modules":
+	{
+		"AutoRole":
+		{
+			"ServerIDHere":
+			{
+				"role": "RoleNameOrIDHere",
+				"message": "WelcomeMessage{0}IsTheUser"
+			}
 		}
 	}
 }

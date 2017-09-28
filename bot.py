@@ -1,62 +1,54 @@
 import sys
+import logging
 import discord
 import asyncio
+import modules
+import importlib
 from simplejson import load
+from discord.ext import commands
+from logging.handlers import RotatingFileHandler 
 
-class Bot(discord.Client):
+class Bot(commands.Bot):
 	def __init__(self, config):
-		self.auth = config["auth"]
-		self.auto_role = config["auto_role"]
+		self.logger_level = logging.INFO
+		self._make_logger()
+		self.logger.info("Loading bot!")
 
-		super().__init__()
+		super().__init__(config["bot"]["prefix"])
+		self._load_modules(config["modules"])
 
-		print("Running bot!")
-		self.run(self.auth["token"])
+		self.logger.info("Running bot!")
+		self.run(config["bot"]["auth"]["token"])
+
+	def _make_logger(self):
+		self.logger = logging.getLogger(__name__)
+		self.logger.setLevel(self.logger_level)
+
+		self.formatter = logging.Formatter(
+			"%(asctime)s - %(name)s - [%(levelname)s] - %(message)s")
+
+		self.ch = logging.StreamHandler()
+		self.ch.setLevel(self.logger_level)
+		self.ch.setFormatter(self.formatter)
+		self.logger.addHandler(self.ch)
+
+		self.fh = RotatingFileHandler('bot.log', maxBytes=50000000)
+		self.fh.setLevel(self.logger_level)
+		self.fh.setFormatter(self.formatter)
+		self.logger.addHandler(self.fh)
+
+	def _load_modules(self, modules):
+		count = 0
+		for name, config in modules.items():
+			module = importlib.import_module(
+				"." + name.lower(), 
+				package="modules")
+			self.add_cog(getattr(module, name)(self, config))
+			count += 1
+		self.logger.info("Loaded {0} modules!".format(count))
 
 	async def on_ready(self):
-		print("Logged in as: " + self.user.name)
-
-	async def on_member_join(self, member):
-		server = member.server 
-		print("New member: " + member.name)
-		if server.id in self.auto_role:
-			print("Auto role triggered for: " + server.name)
-			await self.add_no_role(member, member.server)
-
-	async def add_no_role(self, member, server):
-		_auto_role = self.auto_role[server.id]
-
-		role = _auto_role["role"]
-		if not isinstance(role, discord.role.Role):
-			print("Getting role!")
-			role = await self.get_role(role, server)
-			self.auto_role[server.id]["role"] = role
-		if role is None:
-			print("Role not found!")
-			return
-
-		print("Adding roles!")
-		await self.add_roles(member, role)
-
-		if "message" in _auto_role:
-			message = _auto_role["message"].format(member.mention)
-
-			print("Sending welcome message!")
-			try:
-				await self.send_message(member, content=message)
-			except discord.errors.Forbidden:
-				pass
-
-	async def get_role(self, search, server):
-		roles = server.role_hierarchy
-		best_match = None
-		for role in roles:
-			if search == role.id:
-				return role
-			elif search == role.name:
-				best_match = role
-		return best_match
-
+		self.logger.info("Logged in as: " + self.user.name)
 
 def load_config(path):
 	with open(path) as config_file:
