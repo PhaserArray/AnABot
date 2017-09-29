@@ -18,18 +18,21 @@ class AutoReaction:
 	async def on_message(self, message):
 		channel = message.channel
 		if channel.id in self.config:
-			self.logger.debug("Add reactions!")
 			for reaction in self.config[channel.id]["reactions"]:
 				reaction_ = await self.get_reaction(reaction, channel.server)
-				self.logger.debug(reaction_)
+				if reaction_ is None:
+					self.logger.warning("Could not load reaction: " + reaction)
+				else:
+					self.logger.debug("Adding reaction: " + reaction)
 				await self.bot.add_reaction(message, reaction_)
 
 	async def get_reaction(self, search, server):
-		if search in emoji.UNICODE_EMOJI:
-			return search
 		for reaction in server.emojis:
 			if reaction.name == search:
 				return reaction
 			if reaction.id == search:
 				return reaction
+		emojized = emoji.emojize(search, use_aliases=True)
+		if emojized is not None:
+			return "".join(emojized.split())
 		return None
