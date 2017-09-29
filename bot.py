@@ -10,7 +10,7 @@ from logging.handlers import RotatingFileHandler
 
 class Bot(commands.Bot):
 	def __init__(self, config):
-		self.logger_level = logging.INFO
+		self.logger_level = logging.DEBUG
 		self._make_logger()
 		self.logger.info("Loading bot!")
 

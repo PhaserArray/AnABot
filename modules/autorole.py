@@ -12,11 +12,11 @@ class AutoRole:
 		self.logger.addHandler(bot.ch)
 		self.logger.addHandler(bot.fh)
 
-		self.logger.debug("Auto Role module loaded!")
+		self.logger.debug("AutoRole module loaded!")
 
 	async def on_member_join(self, member):
 		server = member.server 
-		self.logger.info("{0} joined {1}!".format(member.name, member.server))
+		self.logger.info("{0} has joined {1}!".format(member, member.server))
 		if server.id in self.config:
 			self.logger.debug("Auto role triggered!") 
 			await self.add_no_role(member, member.server)
