@@ -18,6 +18,18 @@
 				"role": "RoleNameOrIDHere",
 				"message": "WelcomeMessage{0}IsTheUser"
 			}
+		},
+		"AutoReaction":
+		{
+			"channelID":
+			{
+				"reactions":
+				[
+					"customemojiID",
+					"ORcustomemojiname",
+					"OREmojiNameFrom https://github.com/carpedm20/emoji/blob/master/emoji/unicode_codes.py"
+				]
+			}
 		}
 	}
 }
