@@ -18,7 +18,6 @@ class Bot(commands.Bot):
 		self._load_modules(config["modules"])
 
 		self.logger.info("Running bot!")
-
 		self.run(config["bot"]["auth"]["token"])
 
 	def _make_logger(self):
