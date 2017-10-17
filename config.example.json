@@ -30,6 +30,13 @@
 					"OREmojiNameFrom https://github.com/carpedm20/emoji/blob/master/emoji/unicode_codes.py"
 				]
 			}
+		},
+		"Purge":
+		{
+			"ServerIDHere":
+			[
+				"CaseSensitiveRoleNameOrIDThatCanPurge"
+			]
 		}
 	}
 }
