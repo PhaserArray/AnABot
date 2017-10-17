@@ -48,8 +48,10 @@ class Purge:
 		for role in ctx.message.author.roles:
 			if role.id in self.config[ctx.message.server.id]:
 				permitted = True
+				break
 			if role.name in self.config[ctx.message.server.id]:
 				permitted = True
+				break
 		if not permitted:
 			await self.bot.say(content="❌ **You are not allowed to use this!**",
 			delete_after=5)
