@@ -1,7 +1,7 @@
 {
 	"bot":
 	{
-		"prefix": ">",
+		"prefix": "<@361529102676525066> ",
 		"auth":
 		{
 			"client_id": "ClientIDHere",
