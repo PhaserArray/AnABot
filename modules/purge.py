@@ -26,6 +26,9 @@ class Purge:
 			)
 		)
 
+		if not ctx.message.server.id in self.config:
+			return
+
 		await self.bot.delete_message(ctx.message)
 
 		_count = 0
