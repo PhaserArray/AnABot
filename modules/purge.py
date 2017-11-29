@@ -76,6 +76,9 @@ class Purge:
 			if member is not None:
 				if msg.author == member:
 					return True
+			elif str(param) == "embed":
+				if msg.embeds.count != 0:
+					return True
 			else:
 				if str(param) in msg.content:
 					return True
