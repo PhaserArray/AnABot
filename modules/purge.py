@@ -76,8 +76,8 @@ class Purge:
 			if member is not None:
 				if msg.author == member:
 					return True
-			elif str(param) == "embed":
-				if msg.embeds.count != 0:
+			elif str(param).lower() == "preview":
+				if len(msg.embeds) != 0 or len(msg.attachments) != 0:
 					return True
 			else:
 				if str(param) in msg.content:
