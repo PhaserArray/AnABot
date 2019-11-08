@@ -2,8 +2,9 @@ import discord
 import asyncio
 import logging
 import emoji
+from discord.ext import commands
 
-class AutoReaction:
+class AutoReaction(commands.Cog):
 	def __init__(self, bot, config):
 		self.bot = bot
 		self.config = config
