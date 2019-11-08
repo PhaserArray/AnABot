@@ -98,3 +98,6 @@ config.json
 *.log
 *.sql
 *.sqlite
+
+# VS Code
+.vscode/
